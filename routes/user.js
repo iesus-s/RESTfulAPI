@@ -11,10 +11,11 @@ router.get('/', function(req, res) {
 
 // Import Users Controller
 var usersController = require('../controllers/usersController');
+const validateCreateUser = require('../middleware/userMiddleware');
 // Users Routes
 router.route('/users')
     .get(usersController.index)
-    .post(usersController.new);
+    .post(validateCreateUser, usersController.new);
 router.route('/users/:users_id')
     .get(usersController.view)
     .patch(usersController.update)

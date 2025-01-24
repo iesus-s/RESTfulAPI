@@ -25,10 +25,11 @@ exports.new = async(req, res) => {
             user_name: req.body.user_name,
             email: req.body.email,
             password: req.body.password,
+            retypePassword: req.body.retypePassword,
         });
         await user.save();
         res.json({
-            message: 'New User created!',
+            message: 'New User Created!',
             data: user
         });
     } catch (err) {
@@ -46,7 +47,7 @@ exports.view = async(req, res) => {
         if (!user) {
             return res.status(404).json({
                 status: "error",
-                message: "User not found"
+                message: "User Not Found"
             });
         }
         res.json({
@@ -68,7 +69,7 @@ exports.update = async(req, res) => {
         if (!contact) {
             return res.status(404).json({
                 status: "error",
-                message: "User not found"
+                message: "User Not Found"
             });
         }
 
@@ -76,8 +77,9 @@ exports.update = async(req, res) => {
         user.name = req.body.name || user.name;
         user.email = req.body.email;
         user.password = req.body.password;
+        user.retypePassword = req.body.retypePassword,
 
-        await user.save();
+            await user.save();
         res.json({
             message: 'User Info Updated',
             data: user
@@ -97,7 +99,7 @@ exports.delete = async(req, res) => {
         if (result.deletedCount === 0) {
             return res.status(404).json({
                 status: "error",
-                message: "User not found"
+                message: "User Not Found"
             });
         }
         res.json({

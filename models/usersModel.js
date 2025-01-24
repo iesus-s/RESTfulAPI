@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    retypePassword: {
+        type: String,
+        required: true
+    },
     create_date: {
         type: Date,
         default: Date.now

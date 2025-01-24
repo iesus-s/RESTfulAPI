@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install && npm install express --save
+RUN npm install && npm install express --save && npm install cors --save
 
 # Copy the application code
 COPY . .
