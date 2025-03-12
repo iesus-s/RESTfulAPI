@@ -6,9 +6,10 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
+COPY .env .env
 
-# Install dependencies
-RUN npm install && npm install express --save && npm install cors --save
+# Install dependencies 
+RUN npm install  
 
 # Copy the application code
 COPY . .

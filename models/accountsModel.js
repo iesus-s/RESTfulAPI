@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 // Setup schema
-const userSchema = mongoose.Schema({
-    user_name: {
+const accountsSchema = mongoose.Schema({
+    account: {
         type: String,
         required: true
+    },
+    username: {
+        type: String,
+        required: false
     },
     email: {
         type: String,
-        required: true
+        required: false
     },
     password: {
-        type: String,
-        required: true
-    },
-    retypePassword: {
         type: String,
         required: true
     },
@@ -24,6 +24,6 @@ const userSchema = mongoose.Schema({
     }
 });
 
-// Export Users model
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+// Export Account model
+const Account = mongoose.model('Accounts', accountsSchema);
+module.exports = Account;

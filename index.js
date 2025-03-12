@@ -14,7 +14,7 @@ let app = express();
 const MONGO_URI = process.env.MONGO_URI;
 
 // Import routes
-let apiRoutes = require("./routes/user");
+let apiRoutes = require("./routes/accounts");
 
 // Enable CORS
 app.use(cors());
