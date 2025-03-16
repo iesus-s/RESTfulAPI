@@ -1,5 +1,19 @@
 // Import contact model
 const Account = require('../models/accountsModel');
+// Import Encryption for passwords
+const crypto = require('crypto');
+require('dotenv').config();
+
+const algorithm = 'aes-256-cbc';
+const secretKey = process.env.SECRET_KEY; // 32-character hex key
+const iv = crypto.randomBytes(16);
+
+function encrypt(text) {
+    const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey, 'hex'), iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return iv.toString('hex') + ':' + encrypted; // Store IV with encrypted text
+}
 
 // Handle index actions for accounts
 exports.index = async(req, res) => {
@@ -21,11 +35,17 @@ exports.index = async(req, res) => {
 // Handle Create Account Actions
 exports.new = async(req, res) => {
     try {
+        // Encrypt everything before saving
+        const enncryptedAccount = encrypt(req.body.account);
+        const encryptedUsername = encrypt(req.body.username);
+        const encryptedEmail = encrypt(req.body.email);
+        const encryptedPassword = encrypt(req.body.password);
+
         const account = new Account({
-            account: req.body.account,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
+            account: enncryptedAccount,
+            username: encryptedUsername,
+            email: encryptedEmail,
+            password: encryptedPassword,
         });
         await account.save();
         res.json({
@@ -37,6 +57,8 @@ exports.new = async(req, res) => {
             status: "error",
             message: err.message
         });
+        console.log(secretKey);
+        console.log(iv.toString('hex'));
     }
 };
 
