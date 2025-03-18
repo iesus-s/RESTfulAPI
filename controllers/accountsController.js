@@ -36,13 +36,13 @@ exports.index = async(req, res) => {
 exports.new = async(req, res) => {
     try {
         // Encrypt everything before saving
-        const enncryptedAccount = encrypt(req.body.account);
+        const unencryptedAccount = req.body.account;
         const encryptedUsername = encrypt(req.body.username);
         const encryptedEmail = encrypt(req.body.email);
         const encryptedPassword = encrypt(req.body.password);
 
         const account = new Account({
-            account: enncryptedAccount,
+            account: unencryptedAccount,
             username: encryptedUsername,
             email: encryptedEmail,
             password: encryptedPassword,
@@ -57,8 +57,6 @@ exports.new = async(req, res) => {
             status: "error",
             message: err.message
         });
-        console.log(secretKey);
-        console.log(iv.toString('hex'));
     }
 };
 
